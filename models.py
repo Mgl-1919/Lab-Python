@@ -2,14 +2,15 @@ from abc import ABC, abstractmethod
 from datetime import date
 
 class Personne(ABC):
+    """ Classe abstraite pour le sous-classe Client, Acteur, Employée. Ne peut être instanciée directement (ABC). Contient les informations de base: nom, prenom, sexe """
     def __init__(self, nom: str, prenom: str, sexe: str):
         self._nom = nom.strip()
         self._prenom = prenom.strip()
         self._sexe = sexe.strip()
 
-    def get_nom(self) -> str: return self._nom
-    def get_prenom(self) -> str: return self._prenom
-    def get_sexe(self) -> str: return self._sexe
+    def get_nom(self) -> str: return self._nom   # Retourne le nom de famille
+    def get_prenom(self) -> str: return self._prenom  # Retourne le prénom
+    def get_sexe(self) -> str: return self._sexe  # Retourne le sexe
 
     @abstractmethod
     def __str__(self) -> str:
@@ -17,8 +18,7 @@ class Personne(ABC):
 
 
 class CarteCredit:
-    """  Conserve l'information de paiement du client. Les données confidentiels sont toujours masquées.
-    """
+    """  Conserve l'information de paiement du client. Les données confidentiels sont toujours masquées."""
     def __int__(self, numero_carte: str, date_expiration: date, code_secret: str):
         self.__numero_carte = numero_carte.strip()
         self.__date_expiration = date_expiration
@@ -33,3 +33,24 @@ class CarteCredit:
         statut = "EXPIRÉE" if self.est_expiree() else "Valide"
         return f"Carte: {self.get_numero_masque()} | {statut}"
 
+
+class Client(Personne):
+    """ Client abonnée au service de streaming. Hérite de Personne. """
+    def __init__(self, nom: str, prenom: str, sexe: str, date_inscription: date, courriel: str, password: str):
+        super().__init__(nom, prenom, sexe)
+        self.__date_inscription = date_inscription
+        self.__courriel = courriel.strip().lower()
+        self.__password = password
+        self.__cartes = []
+
+    def get_courriel(self) -> str: return self.__courriel
+    def get_date_inscription(self) -> date: return self.__date_inscription
+
+
+    def ajouter_carte(self, carte: CarteCredit):
+        self.__cartes.append(carte)
+
+    def get_cartes(self) -> list: return list(self.__cartes)
+
+    def __str__(self) -> str:
+            return f"Client: {self._prenom} {self._nom} | Courriel: {self.__courriel}"
