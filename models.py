@@ -57,7 +57,7 @@ class Client(Personne):
 
 
 class Employe(Personne):
-    """ Pour les employés qui utilisent régulièrement le système de gestion. Deux niveaux d'accès seront disponibles : TOTAL ou LECTURE. """
+    """  Pour les employés qui utilisent régulièrement le système de gestion. Deux niveaux d'accès seront disponibles : TOTAL ou LECTURE. """
     ACCES_TOTAL = "TOTAL"
     ACCES_LECTURE = "LECTURE"
 
@@ -75,3 +75,21 @@ class Employe(Personne):
     def valider_connexion(self, code: str, password: str) -> bool: return ( code.strip() == self.__code_utilisateur and password == self.__password)
     def est_lecture_seule(self) -> bool: return self.__type_acces == self.ACCES_LECTURE
     def __str__(self) -> str: return f"Employe: {self._prenom} {self._nom} | Acces: {self.__type_acces}"
+
+
+class Acteur(Personne):
+    """   Acteur extraordinaire ayant participé à de nombreux films de genres variés. Hérite de Personne.  """
+    def __init__(self, nom: str, prenom: str, sexe: str, nom_personnage: str, debut_emploi: date, fin_emploi: date, salaire: float):
+        super().__init__(nom, prenom, sexe)
+        self.__nom_personnage = nom_personnage
+        self.__debut_emploi = debut_emploi
+        self.__fin_emploi = fin_emploi
+        self.__salaire = salaire
+
+    def get_nom_personnage(self) -> str: return self.__nom_personnage
+    def get_debut_emploi(self) -> date: return self.__debut_emploi
+    def get_fin_emploi(self) -> date: return self.__fin_emploi
+    def get_salaire(self) -> float: return self.__salaire
+
+    def __str__(self) -> str: return f"Acteur : {self._prenom} {self._nom} | " f"Personnage: {self.__nom_personnage}"
+
