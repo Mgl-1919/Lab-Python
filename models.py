@@ -54,3 +54,24 @@ class Client(Personne):
 
     def __str__(self) -> str:
             return f"Client: {self._prenom} {self._nom} | Courriel: {self.__courriel}"
+
+
+class Employe(Personne):
+    """ Pour les employés qui utilisent régulièrement le système de gestion. Deux niveaux d'accès seront disponibles : TOTAL ou LECTURE. """
+    ACCES_TOTAL = "TOTAL"
+    ACCES_LECTURE = "LECTURE"
+
+    def __int__(self, nom: str, prenom: str, sexe: str, date_embauche: date, code_utilisateur: str, password: str,
+                type_acces: str):
+        super().__init__(nom, prenom, sexe)
+        self.__date_embauche = date_embauche
+        self.__code_utilisateur = code_utilisateur.strip()
+        self.__password = password
+        self.__type_acces = type_acces
+    def get_code_utilisateur(self) -> str: return self.__code_utilisateur
+    def get_type_acces(self) -> str: return self.__type_acces
+    def get_date_embauche(self) -> date: return self.__date_embauche
+
+    def valider_connexion(self, code: str, password: str) -> bool: return ( code.strip() == self.__code_utilisateur and password == self.__password)
+    def est_lecture_seule(self) -> bool: return self.__type_acces == self.ACCES_LECTURE
+    def __str__(self) -> str: return f"Employe: {self._prenom} {self._nom} | Acces: {self.__type_acces}"
