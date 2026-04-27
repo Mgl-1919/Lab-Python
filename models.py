@@ -93,3 +93,44 @@ class Acteur(Personne):
 
     def __str__(self) -> str: return f"Acteur : {self._prenom} {self._nom} | " f"Personnage: {self.__nom_personnage}"
 
+
+class Categorie:
+    """ Catégorie de films, parmi lesquels: Drame, Comédie, Action etc. """
+    def __init__(self, nom: str, description: str):
+        self.__nom = nom.strip()
+        self.__description = description.strip()
+
+    def get_nom(self) -> str: return self.__nom
+    def get_description(self) -> str: return self.__description
+
+    def __str__(self) -> str: return f"Catégorie: {self.__nom} - {self.__description}"
+
+
+class Film:
+    """ Ici on peut trouver les  Catégories  des films disponible sur la plateforme de streaming,même plusieurs acteurs. """
+
+    def __int__(self, nom: str, duree: int, description: str):
+        self.__nom = nom.strip()
+        self.__duree = duree
+        self.__description = description.strip()
+        self.__categories = []
+        self.__acteurs = []
+
+    def ajouter_categorie(self, categorie: Categorie):
+        self.__categories.append(categorie)
+
+    def ajouter_acteur(self, acteur: Acteur):
+        self.__acteurs.append(acteur)
+
+    def get_nom(self) -> str: return self.__nom
+    def get_duree(self) -> int: return self.__duree
+    def get_description(self) -> str: return self.__description
+    def get_categories(self) -> list: return list(self.__categories)
+    def get_acteurs(self) -> list: return list(self.__acteurs)
+
+    def get_categories_str(self) -> str: return ", ".join(c.get_nom() for c in self.__categories)
+
+    def get_acteurs_str(self) -> str: return ", ".join(f"{a.get_prenom()} {a.get_nom()}" for a in self.__acteurs)
+
+    def __str__(self) -> str: return f"Film: {self.__nom} | Durée: {self.__duree} min | {self.get_categories_str()}"
+
