@@ -134,3 +134,42 @@ class Film:
 
     def __str__(self) -> str: return f"Film: {self.__nom} | Durée: {self.__duree} min | {self.get_categories_str()}"
 
+    # ___________________________
+    # Données de démonstration
+
+def charger_donnees():
+    """ Creé er retourne         """
+    # -- Employés ---
+    employes = [
+        Employe("Stevenson", "Danne", "F", date(2019, 3, 17), "admin23", "Admin1234", Employe.ACCES_TOTAL),
+        Employe("Smith", "Paul", "M", date(2020, 11, 28), "lesion12", "Lecture12345", Employe.ACCES_LECTURE),
+    ]
+
+    # -- Catégories ---
+    action = Categorie("Action", "Catalogue des films d'action")
+    comedie = Categorie("Comédie", "Répertoire des films drôles et divertissants")
+    drame = Categorie("Drame", "Collection des films dramatiques")
+
+    # -- Acteurs ---
+    acteur1 = Acteur("McConaughey", "Matthew", "M", "Cooper", date(2013, 1, 1), date(2015, 12, 31), 3000000.0)
+    acteur2 = Acteur("Cruise", "Tom ", "F", "Ethan", date(2023, 1, 1), date(2025, 12, 31), 5500000.0)
+
+    # -- Films ---
+    film1 = Film("Interstellar", 169, "Une histoire futuriste")
+    film1.ajouter_categorie(drame)
+    film1.ajouter_acteur(acteur1)
+
+    film2 = Film("Mission Impossible", 170, "Une séquence d'espionnage")
+    film2.ajouter_categorie(action)
+    film2.ajouter_acteur(acteur2)
+
+    films = [film1, film2]
+
+    # -- Clients ---
+    client1 = Client("Marx", "Line", "F", date(2025, 2, 11), "marlix12@tmail.com", "Soleil12")
+    client1.ajouter_carte(CarteCredit("4534453445344534", date(2028, 3, 14), "606"))
+
+    client2 = Client("Dallas", "Jhon", "M", date(2024, 1, 4), "team67@xmail.com", "Passer34")
+    clients = [client1, client2]
+
+    return  employes, clients, films
