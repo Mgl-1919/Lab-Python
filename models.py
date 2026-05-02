@@ -1,9 +1,16 @@
+# _________________________________________________________________________________
+#  FICHIER : models.py
+#  DESCRIPTION : Création du diagramme des classes et utilisation des principes orientés objet.
+#  Auteur : Miguel Andrade
+#  DATE : 28 d'avril 2026
+
 from abc import ABC, abstractmethod
 from datetime import date
 
+
 class Personne(ABC):
     """ Classe abstraite pour le sous-classe Client, Acteur, Employée. Ne peut être instanciée directement (ABC). Contient les informations de base: nom, prenom, sexe """
-    def __init__(self, nom: str, prenom: str, sexe: str):
+    def __init__(self, nom: str, prenom: str, sexe: str) -> object:
         self._nom = nom.strip()
         self._prenom = prenom.strip()
         self._sexe = sexe.strip()
@@ -18,8 +25,8 @@ class Personne(ABC):
 
 
 class CarteCredit:
-    """  Conserve l'information de paiement du client. Les données confidentiels sont toujours masquées."""
-    def __int__(self, numero_carte: str, date_expiration: date, code_secret: str):
+    """  Conserve l'information de paiement du client. Les données confidentielles sont toujours masquées."""
+    def __init__(self, numero_carte: str, date_expiration: date, code_secret: str):
         self.__numero_carte = numero_carte.strip()
         self.__date_expiration = date_expiration
         self.__code_secret = code_secret
@@ -35,7 +42,7 @@ class CarteCredit:
 
 
 class Client(Personne):
-    """ Client abonnée au service de streaming. Hérite de Personne. """
+    """ Client abonné au service de streaming. Hérite de Personne. """
     def __init__(self, nom: str, prenom: str, sexe: str, date_inscription: date, courriel: str, password: str):
         super().__init__(nom, prenom, sexe)
         self.__date_inscription = date_inscription
@@ -60,9 +67,7 @@ class Employe(Personne):
     """  Pour les employés qui utilisent régulièrement le système de gestion. Deux niveaux d'accès seront disponibles : TOTAL ou LECTURE. """
     ACCES_TOTAL = "TOTAL"
     ACCES_LECTURE = "LECTURE"
-
-    def __int__(self, nom: str, prenom: str, sexe: str, date_embauche: date, code_utilisateur: str, password: str,
-                type_acces: str):
+    def __init__(self, nom: str, prenom: str, sexe: str, date_embauche: date, code_utilisateur: str, password: str, type_acces: str):
         super().__init__(nom, prenom, sexe)
         self.__date_embauche = date_embauche
         self.__code_utilisateur = code_utilisateur.strip()
@@ -95,7 +100,7 @@ class Acteur(Personne):
 
 
 class Categorie:
-    """ Catégorie de films, parmi lesquels: Drame, Comédie, Action etc. """
+    """ Catégorie de films, parmi ceux-ci se distinguent: Drame, Comédie, Action etc. """
     def __init__(self, nom: str, description: str):
         self.__nom = nom.strip()
         self.__description = description.strip()
@@ -109,7 +114,7 @@ class Categorie:
 class Film:
     """ Ici on peut trouver les  Catégories  des films disponible sur la plateforme de streaming,même plusieurs acteurs. """
 
-    def __int__(self, nom: str, duree: int, description: str):
+    def __init__(self, nom: str, duree: int, description: str):
         self.__nom = nom.strip()
         self.__duree = duree
         self.__description = description.strip()
@@ -138,11 +143,11 @@ class Film:
     # Données de démonstration
 
 def charger_donnees():
-    """ Creé er retourne         """
+    """ Creé et retourne des données de démonstration qui vérifient que l'application fonctionne """
     # -- Employés ---
     employes = [
         Employe("Stevenson", "Danne", "F", date(2019, 3, 17), "admin23", "Admin1234", Employe.ACCES_TOTAL),
-        Employe("Smith", "Paul", "M", date(2020, 11, 28), "lesion12", "Lecture12345", Employe.ACCES_LECTURE),
+        Employe("Smith", "Paul", "M", date(2020, 11, 28), "lesion12", "Patates12345", Employe.ACCES_LECTURE),
     ]
 
     # -- Catégories ---
@@ -172,4 +177,5 @@ def charger_donnees():
     client2 = Client("Dallas", "Jhon", "M", date(2024, 1, 4), "team67@xmail.com", "Passer34")
     clients = [client1, client2]
 
-    return  employes, clients, films
+    return employes, clients, films
+
