@@ -1,0 +1,111 @@
+@startuml Diagrammme des Clases
+' ============================================================
+' DIAGRAMA DE CLASES - Application de streaming (Lab_Python - RAC)
+' NOM DU CANDIDAT: Miguel Andrade
+' Évaluation 00Q2-00Q6 - Cégep Limoilou
+' ============================================================
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam backgroundColor #FAFAFA
+skinparam class {
+    BackgroundColor #EEF2FF
+    BorderColor #4F46E5
+    ArrowColor #4F46E5
+    FontColor #1E1B4B
+}
+
+' ─────────────────────────────────────────
+' CLASSE DE BASE
+' ─────────────────────────────────────────
+abstract class Personne {
+    # nom : str
+    # prenom : str
+    # sexe : str
+    --
+    + get_nom() : str
+    + get_prenom() : str
+    + get_sexe() : str
+    + __str__() : str
+}
+
+' ─────────────────────────────────────────
+' CLASSES HÉRITANT DE PERSONNE
+' ─────────────────────────────────────────
+class Client {
+    - date_inscription : date
+    - courriel : str
+    - password : str
+    --
+    + valider_courriel() : bool
+    + valider_password() : bool
+    + ajouter_carte(carte: CarteCredit) : void
+    + get_cartes() : list
+}
+
+class Acteur {
+    - nom_personnage : str
+    - debut_emploi : date
+    - fin_emploi : date
+    - salaire : float
+    --
+    + get_nom_personnage() : str
+    + get_salaire() : float
+}
+
+class Employe {
+    - date_embauche : date
+    - code_utilisateur : str
+    - password : str
+    - type_acces : str
+    --
+    + valider_connexion(code: str, pwd: str) : bool
+    + est_lecture_seule() : bool
+}
+
+' ─────────────────────────────────────────
+' AUTRES CLASSES
+' ─────────────────────────────────────────
+class CarteCredit {
+    - numero_carte : str
+    - date_expiration : date
+    - code_secret : str
+    --
+    + est_expiree() : bool
+    + get_numero_masque() : str
+}
+
+class Film {
+    - nom : str
+    - duree : int
+    - description : str
+    --
+    + ajouter_categorie(cat: Categorie) : void
+    + ajouter_acteur(acteur: Acteur) : void
+    + get_categories() : list
+    + get_acteurs() : list
+}
+
+class Categorie {
+    - nom : str
+    - description : str
+    --
+    + get_nom() : str
+    + get_description() : str
+}
+
+' ─────────────────────────────────────────
+' RELATIONS D'HÉRITAGE
+' ─────────────────────────────────────────
+Personne <|-- Client
+Personne <|-- Acteur
+Personne <|-- Employe
+
+' ─────────────────────────────────────────
+' RELATIONS D'ASSOCIATION / COMPOSITION
+' ─────────────────────────────────────────
+Client "1" o-- "0..*" CarteCredit : possède >
+Film "0..*" o-- "1..*" Categorie : appartient à >
+Film "0..*" -- "0..*" Acteur : joue dans >
+
+@enduml
